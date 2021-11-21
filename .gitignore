@@ -1,1 +1,4 @@
+# Ignore the virtual environment folder. It contains way too many irrelevant files.
+# It's a helper module anyways and I'll generate a requirements.txt file in case 
+# The environment needs to be moved to another system
 .venv
