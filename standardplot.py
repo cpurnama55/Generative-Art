@@ -1,3 +1,4 @@
+# Another sample file, this time teaching the installation of modules and using them
 import matplotlib.pyplot as plt 
 import numpy as np
 
