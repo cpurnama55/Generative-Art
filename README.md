@@ -5,4 +5,4 @@ Right now I'm currently unsure on what I want this program to do, but the basic 
 is that an algorithm should be capable of generating random pieces of artwork and could
 possibly respond to a form of input such as voice
 
-![Alt text](generative_art_example.jpg?raw=true "An example of generative art")
+![Alt text](pictures/generative_art_example.jpg?raw=true "An example of generative art")
