@@ -3,7 +3,6 @@ import turtle
 # For turtle documentation, visit the following link:
 # https://docs.python.org/3/library/turtle.html#turtle.mainloop
 
-
 # Set up the turtle environment 
 turtle.setup(0.75, 0.75)            # Create a screen that occupies 75% in width and height                     
 turtle.title("Turtle Keys")         # String to display in title bar of window
