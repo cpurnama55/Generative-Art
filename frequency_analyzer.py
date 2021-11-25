@@ -13,7 +13,7 @@ from tkinter import TclError
 # %matplotlib tk
 ######################
 
-CHUNK = 1024 * 2                    # How much audio samples that will be processed/displayed in a frame at a time
+CHUNK = 1024                        # How much audio samples that will be processed/displayed in a frame at a time
 FORMAT = pyaudio.paInt16            # Number of bytes per channel
 CHANNELS = 1                        # We're using just a microphone, so we'll just be accessing from one channel
 RATE = 44100                        # Samples taken in per second, defined in frequency 
@@ -50,7 +50,7 @@ ax.set_xlim(0, 2 * CHUNK)
 plt.setp(ax, xticks=[0, CHUNK, 2 * CHUNK], yticks=[0, 128, 255])
 
 # show the plot
-plt.show(block=False)
+plt.show(block = False)
 
 print('stream started')
 
