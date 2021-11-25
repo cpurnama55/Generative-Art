@@ -1,4 +1,5 @@
 import pyaudio
+import audioop
 import os
 import struct
 import numpy as np
@@ -51,20 +52,30 @@ print('stream started')
 frame_count = 0
 start_time = time.time()
 
+np.set_printoptions(precision = 1, suppress = True)
 while True:
     
     # binary data
     data = stream.read(CHUNK)  
     
-    # convert data to integers, make np array, then offset it by 127
+    rms = audioop.rms(data, 2)
+    # try:
+    #     decibel = int(20 * np.log10(rms))
+    #     line_fft.set_ydata(decibel)
+    # except OverflowError:
+    #     print('Still starting up...')
+    #     pass
+    
+    # # convert data to integers
     data_int = struct.unpack(str(2 * CHUNK) + 'B', data)
     
-    # create np array and offset by 128
+    # # create np array and offset by 128
     data_np = np.array(data_int, dtype='b')[::2] + 128
-    
-    # compute FFT and update line
+    # # compute FFT and update line
     y_fourier = fft(data_int)
-    line_fft.set_ydata(np.abs(y_fourier[0:CHUNK])  / (128 * CHUNK))
+    buffer = np.abs(y_fourier[0:CHUNK])  / (128 * CHUNK)
+    print(buffer)
+    # line_fft.set_ydata(np.abs(y_fourier[0:CHUNK])  / (128 * CHUNK))
     
     # update figure canvas
     try:
@@ -73,7 +84,6 @@ while True:
         frame_count += 1
         
     except KeyboardInterrupt:
-        
         # calculate average frame rate
         frame_rate = frame_count / (time.time() - start_time)
         

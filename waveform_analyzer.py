@@ -66,10 +66,9 @@ while True:
     # Read samples from the stream for the specified number of frames. This returns raw byte values, not integers
     data = stream.read(CHUNK)       
     
-     # In order to get understandable values, we need to convert the read data into integers
+    # In order to get understandable values, we need to convert the read data into integers
     # Convert the data from raw bytes to integers. We specify a size of 2 * chunk because the data input is actually twice the size of CHUNK. Also pass in the data.
     data_int = struct.unpack(str(2 * CHUNK) + 'B', data)
-    
    
     # We will also convert the struct data into a numpy array for easier presentation of the data
     # dtype b is an integer from 0 to 255   
