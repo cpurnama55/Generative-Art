@@ -14,7 +14,7 @@ from tkinter import TclError
 ######################
 
 CHUNK = 1024                        # How much audio samples that will be processed/displayed in a frame at a time
-FORMAT = pyaudio.paInt16            # Number of bytes per channel
+FORMAT = pyaudio.paInt16            # Representation of incoming audio samples
 CHANNELS = 1                        # We're using just a microphone, so we'll just be accessing from one channel
 RATE = 44100                        # Samples taken in per second, defined in frequency 
 
