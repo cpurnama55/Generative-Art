@@ -15,7 +15,7 @@ import os
 # Setting chunk sample size higher produces a more accurate frequency determination however it increases processing time
 # I think a good middle ground is using 11025 sample size, using 22050 doubles time from 250 ms to 500 ms
 
-CHUNK = 1024 * 2           # Samples per frame
+CHUNK = 1024 * 2             # Samples per frame
 FORMAT = pyaudio.paInt16     # audio format of data
 CHANNELS = 1                 # single channel for microphone
 RATE = 44100                 # samples per second
@@ -23,7 +23,7 @@ RATE = 44100                 # samples per second
 # Pyaudio class instance to actually interface with sound input
 p = pyaudio.PyAudio()
 
-# stream object to get data from microphone
+# Stream object to get data from microphone
 stream = p.open(
     format=FORMAT,
     channels=CHANNELS,
@@ -50,6 +50,7 @@ angle = 91          # Angle at which the turtle turns. Changing this value great
 speed = 0           # Speed at which the turtle draws. 0: Fastest, 10: fast, normal: 6, slow: 3, slowest: 1
 delay = 0           # Delay between canvas updates in ms. Lower value correlates to faster canvas updates
 side_step = 0       # Value in which size will increase at. A smaller size_step creates a tighter spiral and vice versa. The initialization of this value does not matter
+marker = 0          # Value that holds what the last frequency range we were in was. Helps indicate when the shape parameters should change or be held constant
 
 # Set up frequency ranges for different shapes to draw depending on frequency
 range_one = range(0, 100)
@@ -87,7 +88,7 @@ def update_shape(size_input, speed_input, side_step_input, angle_input):
 def start_drawing():
     # Main function that commands the turtle to actually draw
     # After this function is called the turtle will continue to draw unless the pause_drawing function is called
-    global speed, delay, size, angle, side_step
+    global speed, delay, size, angle, side_step, marker
     global range_one, range_two, range_three, range_four, range_five, range_six, range_seven, range_eight, range_nine, range_ten, range_eleven, range_tweleve, range_thirteen 
     tt.speed(speed)
     tt.delay(delay)
@@ -95,40 +96,69 @@ def start_drawing():
     while True:
         freq = acquire_frequency(stream = stream, xf_array = xf, CHUNK = CHUNK, RATE = RATE) 
         if freq in range_one:
-            update_shape(size_input = 10, speed_input = 4, side_step_input = 4, angle_input = 480)
+            if marker != 1:
+                update_shape(size_input = 10, speed_input = 4, side_step_input = 4, angle_input = 480)
+                marker = 1
         elif freq in range_two:
-            update_shape(size_input = 20, speed_input = 4, side_step_input = 2.5, angle_input = 90)
-        elif freq in range_three:        
-            update_shape(size_input = 30, speed_input = 4, side_step_input = 1, angle_input = 60)
+            if marker != 2:
+                update_shape(size_input = 20, speed_input = 4, side_step_input = 2.5, angle_input = 90)
+                marker = 2
+        elif freq in range_three:  
+            if marker != 3:
+                update_shape(size_input = 30, speed_input = 4, side_step_input = 1, angle_input = 60)
+                marker = 3
         elif freq in range_four:
-            update_shape(size_input = 40, speed_input = 6, side_step_input = 0.8, angle_input = 56)
+            if marker != 4:
+                update_shape(size_input = 40, speed_input = 6, side_step_input = 0.8, angle_input = 56)
+                marker = 4
         elif freq in range_five:
-            update_shape(size_input = 50, speed_input = 8, side_step_input = 0.4, angle_input = 63)
+            if marker != 5:
+                update_shape(size_input = 50, speed_input = 8, side_step_input = 0.4, angle_input = 63)
+                marker = 5
         elif freq in range_six:
-            update_shape(size_input = 60, speed_input = 10, side_step_input = 0.6, angle_input = 91)
+            if marker != 6:
+                update_shape(size_input = 60, speed_input = 10, side_step_input = 0.6, angle_input = 91)
+                marker = 6
         elif freq in range_seven:
-            update_shape(size_input = 70, speed_input = 0, side_step_input = 0.3, angle_input = 75)
+            if marker != 7:
+                update_shape(size_input = 70, speed_input = 0, side_step_input = 0.3, angle_input = 75)
+                marker = 7
         elif freq in range_eight:
-            update_shape(size_input = 80, speed_input = 0, side_step_input = 0.2, angle_input = 85)
+            if marker != 8:
+                update_shape(size_input = 80, speed_input = 0, side_step_input = 0.2, angle_input = 85)
+                marker = 8
         elif freq in range_nine:
-            update_shape(size_input = 90, speed_input = 0, side_step_input = 0.3, angle_input = 96)
+            if marker != 9:
+                update_shape(size_input = 90, speed_input = 0, side_step_input = 0.3, angle_input = 96)
+                marker = 9
         elif freq in range_ten:
-            update_shape(size_input = 100, speed_input = 0, side_step_input = 0.4, angle_input = 106)
+            if marker != 10:
+                update_shape(size_input = 100, speed_input = 0, side_step_input = 0.4, angle_input = 106)
+                marker = 10
         elif freq in range_eleven:
-            update_shape(size_input = 110, speed_input = 0, side_step_input = 0.4, angle_input = 121)
+            if marker != 11:
+                update_shape(size_input = 110, speed_input = 0, side_step_input = 0.4, angle_input = 121)
+                marker = 11
         elif freq in range_tweleve:
-            update_shape(size_input = 120, speed_input = 0, side_step_input = 0.3, angle_input = 300)
+            if marker != 12:
+                update_shape(size_input = 120, speed_input = 0, side_step_input = 0.3, angle_input = 300)
+                marker = 12
         elif freq in range_thirteen:
-            update_shape(size_input = 130, speed_input = 0, side_step_input = 0.5, angle_input = 131)
+            if marker != 13:
+                update_shape(size_input = 130, speed_input = 0, side_step_input = 0.5, angle_input = 131)
+                marker = 13
         elif freq in range_fourteen:
-            update_shape(size_input = 140, speed_input = 10, side_step_input = 2, angle_input = 200)
+            if marker != 14:
+                update_shape(size_input = 140, speed_input = 10, side_step_input = 2, angle_input = 200)
+                marker = 14
         tt.forward(size)
         tt.right(angle)
         # print(side_step)
         size = size + side_step
-        print(freq)
+
 def pause_drawing():
     tt.done()
+
 def reset_drawing():
     global size
     global angle
@@ -140,6 +170,7 @@ def reset_drawing():
     tt.home()
     tt.speed(speed)
     tt.delay(delay)
+
 def save_drawing():
   # After done creating the image, create a UUID for the file name
     uuid = str(uuid4()) 
@@ -153,10 +184,12 @@ def save_drawing():
     tt.write('Image saved', font = ('Arial', 16, 'normal'))
     tt.done()
 
+# Map the functions to keyboard keys
 tt.onkeypress(start_drawing, 'space')
 tt.onkeypress(pause_drawing, 'p')
 tt.onkeypress(reset_drawing, 'r')
 tt.onkeypress(save_drawing, 's')
+
 # Call listen to set focus on the turtle window. This allows the window to 'listen' for keystroke inputs
 tt.listen()
 # Need mainloop command to be able to interact with turtle
