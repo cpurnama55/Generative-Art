@@ -1,5 +1,7 @@
 import turtle as tt
 from PIL import Image
+from uuid import uuid4
+import os
 
 ##### To draw a spirograph #####
 # # Set the background color as black,
@@ -27,14 +29,21 @@ from PIL import Image
 #         # Move 10 pixels left to draw another circle
 #         tt.left(10)
      
-# # tt.done()    # Stop window from closing
-# tt.getscreen().getcanvas().postscript(file='turtle_image.ps')
+# # After done creating the image, create a UUID for the file name
+# uuid = str(uuid.uuid4()) 
+# # Create the filepath (to specify we want pictures stored in pictures folder in current directory)
+# filepath = 'pictures/' + uuid 
+# # Save the current image on the screen to a postscript file
+# tt.getscreen().getcanvas().postscript(file = filepath + '.ps')
+# # Open the post script file and convert to png
+# psimage=Image.open(filepath + '.ps')
+# psimage.save(filepath + '.png')
+# # Remove the old post script file
+# try:
+#   os.remove(filepath + '.ps')
+# except:
+#   print("Cannot remove  specified file:", filepath + '.ps')
 # tt.done()
-# ### Need ghostscript to do this. At the time of writing this code github is down so idk lol
-# # psimage=Image.open('turtle_image.ps')
-# # psimage.save('turtle_image.png')
-# # tt.done()
-
 ################################
 
 
@@ -58,41 +67,57 @@ from PIL import Image
 # Maximize the screen size of the canvas
 tt.Screen().setup(width = 1.0, height = 1.0)
 # Initial size of side that the turtle creates for shape
-size = 0.5
-# Angle at which the turtle turns. Changing this value greatly changes what shapes the turtle creates
-angle = 91
+size = 1            # Initial size of side that the turtle creates for shape
+side_step = 0.3     # Value in which size will increase at. A smaller size_step creates a tighter spiral and vice versa. The initialization of this value does not matter
+angle = 131          # Angle at which the turtle turns. Changing this value greatly changes what shapes the turtle creates 
+speed = 0           # Speed at which the turtle draws. 0: Fastest, 10: fast, normal: 6, slow: 3, slowest: 1
+delay = 0           # Delay between canvas updates in ms. Lower value correlates to faster canvas updates
 # Hide the turtle cursor
-# tt.hideturtle()
+tt.hideturtle()
 # Make the turtle draw at the fastest speed
-tt.speed(0)
+tt.speed(speed)
 # Adjust time interval between canvas updates. 0 makes the turtle draw super fast
-tt.delay(0)
+tt.delay(speed)
 
 def start_drawing():
-    tt.speed(0)
-    tt.delay(0)
+    global speed
+    global delay
+    global size
+    global angle
+    global side_step
+    tt.speed(speed)
+    tt.delay(delay)
     tt.pendown()
     while True:
         # Call the global instances of size and angle and modify those
-        global size
-        global angle
         tt.forward(size)
         tt.right(angle)
-        size = size + 0.5
+        size = size + side_step
 def pause_drawing():
     tt.done()
 def reset_drawing():
     global size
     global angle
+    global speed
+    global delay
     size = 0.5
     angle = 91
     tt.reset()
     tt.home()
-    tt.speed(0)
-    tt.delay(0)
+    tt.speed(speed)
+    tt.delay(delay)
 def save_drawing():
-    tt.getscreen().getcanvas().postscript(file='turtle_image.ps')
+  # After done creating the image, create a UUID for the file name
+    uuid = str(uuid4()) 
+    # Create the filepath (to specify we want pictures stored in pictures folder in current directory)
+    filepath = 'pictures/' + uuid 
+    # Save the current image on the screen to a postscript file
+    tt.getscreen().getcanvas().postscript(file = filepath + '.ps')
+    # Open the post script file and convert to png
+    psimage=Image.open(filepath + '.ps')
+    psimage.save(filepath + '.png')
     tt.write('Image saved', font = ('Arial', 16, 'normal'))
+    tt.done()
 
 tt.onkeypress(start_drawing, 'space')
 tt.onkeypress(pause_drawing, 'p')
