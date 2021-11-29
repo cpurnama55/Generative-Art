@@ -1,8 +1,8 @@
 # Generative-Art
 For Art 210 final art project.
 
-Right now I'm currently unsure on what I want this program to do, but the basic gist
-is that an algorithm should be capable of generating random pieces of artwork and could
-possibly respond to a form of input such as voice
+Drawing_driver.py is the main script which basically takes in input from device microphone, analyzes the most dominant frequency, and draws
+different things on a canvas using Python's Turtle library. This script is an instance of generative art, art created by a program that a person
+doesn't necessarily have complete control over.
 
 ![Alt text](pictures/generative_art_example.jpg?raw=true "An example of generative art")
