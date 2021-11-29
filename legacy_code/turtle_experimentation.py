@@ -79,11 +79,12 @@ tt.hideturtle()
 tt.speed(speed)
 # Adjust time interval between canvas updates. 0 makes the turtle draw super fast
 tt.delay(speed)
+tt.color('hot pink') 
 
 def start_drawing():
     global speed
     global delay
-    global size
+    global size 
     global angle
     global side_step
     tt.speed(speed)
