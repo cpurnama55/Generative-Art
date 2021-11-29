@@ -14,8 +14,8 @@ import os
 
 # Setting chunk sample size higher produces a more accurate frequency determination however it increases processing time
 # I think a good middle ground is using 11025 sample size, using 22050 doubles time from 250 ms to 500 ms
-# CHUNK = 11025                # samples per frame
-CHUNK = 1024 * 2
+
+CHUNK = 1024 * 2           # Samples per frame
 FORMAT = pyaudio.paInt16     # audio format of data
 CHANNELS = 1                 # single channel for microphone
 RATE = 44100                 # samples per second
@@ -51,11 +51,25 @@ speed = 0           # Speed at which the turtle draws. 0: Fastest, 10: fast, nor
 delay = 0           # Delay between canvas updates in ms. Lower value correlates to faster canvas updates
 side_step = 0       # Value in which size will increase at. A smaller size_step creates a tighter spiral and vice versa. The initialization of this value does not matter
 
+# Set up frequency ranges for different shapes to draw depending on frequency
+range_one = range(0, 100)
+range_two = range(101,200)
+range_three = range(201, 300)
+range_four = range(301, 400)
+range_five = range(401, 500)
+range_six = range(501, 600)
+range_seven = range(601, 700)
+range_eight = range(701, 800)
+range_nine = range(801, 900)
+range_ten = range(901-1000)
+range_eleven = range(1001, 1100)
+range_tweleve = range(1101, 1200)
+range_thirteen = range(1201, 1300)
+range_fourteen = range(1301, 100000)
+
 # Consider adding some holder/flag variable that indicates what the previous frequency range was? This could prove useful if you want
 # to reset the size of the shape being created, because size can get big pretty fast. 
 # IE if we remain in the same frequency range, continue incrementing size. Else reset it back to 1 or whatever
-
-
 # Hide the turtle cursor
 # tt.hideturtle()
 # Make the turtle draw at the fastest speed
@@ -63,39 +77,56 @@ tt.speed(speed)
 # Adjust time interval between canvas updates. 0 makes the turtle draw super fast
 tt.delay(delay)
 
+def update_shape(size_input, speed_input, side_step_input, angle_input):
+    # Update the following global parameters to adjust the shape the turtle is drawing
+    # This is a quick helper function we'll use to assign different shape drawings to different frequency ranges
+    global size, speed, side_step, angle
+    size, speed, side_step, angle = size_input, speed_input, side_step_input, angle_input
+
 # Define functions that will be executed on a keypress
 def start_drawing():
     # Main function that commands the turtle to actually draw
     # After this function is called the turtle will continue to draw unless the pause_drawing function is called
-    global speed
-    global delay
-    global size
-    global angle
-    global side_step
+    global speed, delay, size, angle, side_step
+    global range_one, range_two, range_three, range_four, range_five, range_six, range_seven, range_eight, range_nine, range_ten, range_eleven, range_tweleve, range_thirteen 
     tt.speed(speed)
     tt.delay(delay)
     tt.pendown()
     while True:
         freq = acquire_frequency(stream = stream, xf_array = xf, CHUNK = CHUNK, RATE = RATE) 
-
-        # My (Caelan voice range)
-        if freq in range(100, 400):
-            speed = 0
-            side_step = 0.8
-            angle = 56
-        # Little higher range
-        elif freq in range(401, 800):
-            speed = 0
-            side_step = 0.6
-            angle = 91
-        elif freq in range(801, 20000):
-            speed = 0
-            side_step = 0.5
-            angle = 131
-
+        if freq in range_one:
+            update_shape(size_input = 10, speed_input = 4, side_step_input = 4, angle_input = 480)
+        elif freq in range_two:
+            update_shape(size_input = 20, speed_input = 4, side_step_input = 2.5, angle_input = 90)
+        elif freq in range_three:        
+            update_shape(size_input = 30, speed_input = 4, side_step_input = 1, angle_input = 60)
+        elif freq in range_four:
+            update_shape(size_input = 40, speed_input = 6, side_step_input = 0.8, angle_input = 56)
+        elif freq in range_five:
+            update_shape(size_input = 50, speed_input = 8, side_step_input = 0.4, angle_input = 63)
+        elif freq in range_six:
+            update_shape(size_input = 60, speed_input = 10, side_step_input = 0.6, angle_input = 91)
+        elif freq in range_seven:
+            update_shape(size_input = 70, speed_input = 0, side_step_input = 0.3, angle_input = 75)
+        elif freq in range_eight:
+            update_shape(size_input = 80, speed_input = 0, side_step_input = 0.2, angle_input = 85)
+        elif freq in range_nine:
+            update_shape(size_input = 90, speed_input = 0, side_step_input = 0.3, angle_input = 96)
+        elif freq in range_ten:
+            update_shape(size_input = 100, speed_input = 0, side_step_input = 0.4, angle_input = 106)
+        elif freq in range_eleven:
+            update_shape(size_input = 110, speed_input = 0, side_step_input = 0.4, angle_input = 121)
+        elif freq in range_tweleve:
+            update_shape(size_input = 120, speed_input = 0, side_step_input = 0.3, angle_input = 300)
+        elif freq in range_thirteen:
+            update_shape(size_input = 130, speed_input = 0, side_step_input = 0.5, angle_input = 131)
+        elif freq in range_fourteen:
+            update_shape(size_input = 140, speed_input = 10, side_step_input = 2, angle_input = 200)
         tt.forward(size)
         tt.right(angle)
+        # print(side_step)
         size = size + side_step
+        print(freq)
 def pause_drawing():
     tt.done()
 def reset_drawing():
@@ -149,7 +180,7 @@ tt.mainloop()
 #         pass
 #####################################
 
-# # Just read sound input and determine sound frequency as fast as possible ##
+# Just read sound input and determine sound frequency as fast as possible ##
 # while True:
 #     freq = acquire_frequency(stream = stream, xf_array = xf, CHUNK = CHUNK, RATE = RATE ) 
 #     if freq > 20000:

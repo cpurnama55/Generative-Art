@@ -62,15 +62,16 @@ import os
 # tt.end_fill()
 # tt.done()
 ###########################
-
+ 
 ##### Spiral from squares #####
 # Maximize the screen size of the canvas
 tt.Screen().setup(width = 1.0, height = 1.0)
 # Initial size of side that the turtle creates for shape
 size = 1            # Initial size of side that the turtle creates for shape
-side_step = 0.3     # Value in which size will increase at. A smaller size_step creates a tighter spiral and vice versa. The initialization of this value does not matter
-angle = 131          # Angle at which the turtle turns. Changing this value greatly changes what shapes the turtle creates 
-speed = 0           # Speed at which the turtle draws. 0: Fastest, 10: fast, normal: 6, slow: 3, slowest: 1
+size_init = size    # Store initial value of size
+side_step = 2       # Value in which size will increase at. A smaller size_step creates a tighter spiral and vice versa. The initialization of this value does not matter
+angle = 200         # Angle at which the turtle turns. Changing this value greatly changes what shapes the turtle creates 
+speed = 10           # Speed at which the turtle draws. 0: Fastest, 10: fast, normal: 6, slow: 3, slowest: 1
 delay = 0           # Delay between canvas updates in ms. Lower value correlates to faster canvas updates
 # Hide the turtle cursor
 tt.hideturtle()
@@ -108,7 +109,8 @@ def reset_drawing():
     tt.delay(delay)
 def save_drawing():
   # After done creating the image, create a UUID for the file name
-    uuid = str(uuid4()) 
+    # uuid = str(uuid4()) 
+    uuid = 'size' + str(size_init) + '_sidestep' + str(side_step) + '_angle' + str(angle) + '_speed' + str(speed) + '_delay' + str(delay)
     # Create the filepath (to specify we want pictures stored in pictures folder in current directory)
     filepath = 'pictures/' + uuid 
     # Save the current image on the screen to a postscript file
