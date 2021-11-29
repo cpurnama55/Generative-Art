@@ -7,4 +7,6 @@ doesn't necessarily have complete control over.
 
 You should theoretically be able to use the script if you clone the repo and pip install using the requirements.txt file. I had trouble with PyAudio installation so that is the only thing you would have to install with pip manually or with a work around if you have issues with pip install. 
 
+All this code was done in a virtual environment to it's recommended you use a virtual environment to download the modules and run the script just as a good practice.
+
 ![Alt text](pictures/generative_art_example.jpg?raw=true "An example of generative art")
