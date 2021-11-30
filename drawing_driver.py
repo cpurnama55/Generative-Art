@@ -81,6 +81,9 @@ tt.speed(speed)
 # Adjust time interval between canvas updates. 0 makes the turtle draw super fast
 tt.delay(delay)
 
+# Optionally we can set the background color to black. I like it more than white but that's just personal preference
+# tt.bgcolor('black')
+
 def update_shape(size_input, speed_input, side_step_input, angle_input):
     # Update the following global parameters to adjust the shape the turtle is drawing
     # This is a quick helper function we'll use to assign different shape drawings to different frequency ranges
@@ -194,7 +197,8 @@ def start_drawing():
             if marker != 16:
                 update_shape(size_input = 100, speed_input = 0, side_step_input = 2, angle_input = 200)
                 marker = 16
-                tt.pencolor('black')
+                # tt.pencolor('white')        # Use this pen color if using black background
+                tt.pencolor('black')        # Use this pen color if using white background
 
         # Actually draw the line
         tt.forward(size)
