@@ -253,32 +253,3 @@ tt.onkeypress(save_drawing, 's')
 tt.listen()
 # Need mainloop command to be able to interact with turtle
 tt.mainloop()
-
-########### LEFTOVER CODE ###########
-
-## Acquire average of 10 samples ##
-# Acquire the average frequency from 10 samples
-# while True:
-#     freq = acquire_frequency(stream = stream, xf_array = xf, CHUNK = CHUNK, RATE = RATE )
-#     if freq > 20000:
-#         continue
-#     carrier = np.append(carrier, freq)
-#     # print('Frequency:', freq, 'Hz')
-#     if carrier.size >= 20:
-#         # print(carrier)
-#         print('Average frequency:', int(np.average(carrier)))
-#         carrier = []
-#     else:
-#         pass
-#####################################
-
-# Just read sound input and determine sound frequency as fast as possible ##
-# while True:
-#     freq = acquire_frequency(stream = stream, xf_array = xf, CHUNK = CHUNK, RATE = RATE ) 
-#     if freq > 20000:
-#         print('Max Frequency:', holder, 'Hz')
-#         pass
-#     else: 
-#         holder = freq
-#         print('Max Frequency:', freq, 'Hz')
-#############################################################################
